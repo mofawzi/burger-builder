@@ -23,6 +23,7 @@ class BurgerBuilder extends Component {
     },
     totalPrice: 4,
     purchasable: false,
+    purchasing: false,
   };
 
   // Purchasable if sum of ingredients > 0
@@ -81,6 +82,10 @@ class BurgerBuilder extends Component {
     this.updatePurchaseState(updatedIngredients);
   };
 
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
+  };
+
   render() {
     // Disable the less button for an ingredient type if it isn't added yet
     const disabledInfo = {
@@ -92,7 +97,7 @@ class BurgerBuilder extends Component {
     }
     return (
       <Aux>
-        <Modal>
+        <Modal show={this.state.purchasing}>
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
@@ -101,6 +106,7 @@ class BurgerBuilder extends Component {
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disabledInfo}
           purchasable={this.state.purchasable}
+          ordered={this.purchaseHandler}
           price={this.state.totalPrice}
         />
       </Aux>
