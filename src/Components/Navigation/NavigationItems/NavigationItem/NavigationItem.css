@@ -14,6 +14,7 @@
   display: block;
 }
 
+/* style the Burger Builder link */
 .NavigationItem a:hover,
 .NavigationItem a:active,
 .NavigationItem a.active {

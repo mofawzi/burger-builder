@@ -8,6 +8,7 @@
   height: 100%;
 }
 
+/* Handle Navigation Design for Desktop*/
 @media (min-width: 500px) {
   .NavigationItems {
     flex-flow: row;
