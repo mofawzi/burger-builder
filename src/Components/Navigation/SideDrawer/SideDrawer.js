@@ -7,7 +7,7 @@ import Aux from "../../../hoc/Aux";
 
 const sideDrawer = (props) => {
   // Handle open or close classes in css file
-  let attachedClasses = [classes.SideDrawer, classes.Closed];
+  let attachedClasses = [classes.SideDrawer, classes.Close];
   if (props.open) {
     attachedClasses = [classes.SideDrawer, classes.Open];
   }
