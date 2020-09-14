@@ -23,6 +23,7 @@ class BurgerBuilder extends Component {
     purchasable: false,
     purchasing: false,
     loading: false,
+    error: false,
   };
 
   // Get ingredients from backend (Database)
@@ -31,6 +32,9 @@ class BurgerBuilder extends Component {
       .get("https://my-burger-0128.firebaseio.com/ingredients.json")
       .then((response) => {
         this.setState({ ingredients: response.data });
+      })
+      .catch((err) => {
+        this.setState({ error: true });
       });
   }
 
@@ -142,9 +146,14 @@ class BurgerBuilder extends Component {
     // Initialize orderSummary
     let orderSummary = null;
 
-    // Show Spinner if the burger ingredients is not fetched from db yet
-    let burger = <Spinner />;
+    // Show error if ingredients can't be fetched from db
+    let burger = this.state.error ? (
+      <h1>Ingredients can't be loaded!</h1>
+    ) : (
+      <Spinner />
+    );
 
+    // Show Spinner while the burger ingredients is being fetched from db yet
     if (this.state.ingredients) {
       burger = (
         <Aux>
