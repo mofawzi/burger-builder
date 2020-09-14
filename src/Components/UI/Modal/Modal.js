@@ -7,7 +7,10 @@ export class Modal extends Component {
   // Improving Performance
   // Only re-render if order summary is called
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.show !== this.props.show;
+    return (
+      nextProps.show !== this.props.show ||
+      nextProps.children !== this.props.children
+    );
   }
 
   render() {
