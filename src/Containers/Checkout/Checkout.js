@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import CheckoutSummary from "../../Components/Order/CheckoutSummary/CheckoutSummary";
 
 export class Checkout extends Component {
-  state = {};
-
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <CheckoutSummary />
+      </div>
+    );
   }
 }
 
