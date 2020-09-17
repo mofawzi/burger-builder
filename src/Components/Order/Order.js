@@ -3,8 +3,8 @@ import classes from "./Order.css";
 
 const order = (props) => {
   return (
-    <div>
-      <p>Ingredients:</p>
+    <div className={classes.Order}>
+      <p>Ingredients: Salad (1)</p>
       <p>
         Price: <strong>USD 5.45</strong>
       </p>
