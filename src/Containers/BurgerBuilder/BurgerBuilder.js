@@ -113,7 +113,7 @@ class BurgerBuilder extends Component {
           encodeURIComponent(this.state.ingredients[i])
       );
     }
-    // Push price to the checkout component
+    // Push price to the contact data
     queryParams.push("price=" + this.state.totalPrice);
     // Convert the ingredients array to be a query
     const queryString = queryParams.join("&");
