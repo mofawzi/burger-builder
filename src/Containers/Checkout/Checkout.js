@@ -6,23 +6,25 @@ import ContactData from "./ContactData/ContactData";
 
 export class Checkout extends Component {
   state = {
-    ingredients: {
-      salad: 1,
-      meat: 1,
-      cheese: 1,
-      bacon: 1,
-    },
+    ingredients: null,
+    price: 0,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     // Fetch the ingredients from the search query
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
+    let price = 0;
+    // Mapping ingredients ['salad', '1']
     for (let param of query.entries()) {
-      // ['salad', '1']
-      ingredients[param[0]] = +param[1];
+      // Get price => fetched from burger builder
+      if (param[0] === "price") {
+        price = param[1];
+      } else {
+        ingredients[param[0]] = +param[1];
+      }
     }
-    this.setState({ ingredients });
+    this.setState({ ingredients, totalPrice: price });
   }
 
   // Handling order cancellation
@@ -45,7 +47,14 @@ export class Checkout extends Component {
         />
         <Route
           path={this.props.match.path + "/contact-data"}
-          component={ContactData}
+          // Send ingredients property with the component
+          render={(props) => (
+            <ContactData
+              ingredients={this.state.ingredients}
+              price={this.state.totalPrice}
+              {...props}
+            />
+          )}
         />
       </div>
     );
