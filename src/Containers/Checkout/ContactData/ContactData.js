@@ -24,7 +24,7 @@ class ContactData extends Component {
     // Creating an object to be stored in DB
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.totalPrice,
+      price: this.props.price,
       customer: {
         name: "Mohamed Fawzy",
         adress: {
