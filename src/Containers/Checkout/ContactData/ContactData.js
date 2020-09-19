@@ -16,6 +16,10 @@ class ContactData extends Component {
           placeholder: "Your Name",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       street: {
         elementType: "input",
@@ -24,6 +28,10 @@ class ContactData extends Component {
           placeholder: "Street",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       zipCode: {
         elementType: "input",
@@ -32,6 +40,12 @@ class ContactData extends Component {
           placeholder: "ZIP Code",
         },
         value: "",
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5,
+        },
+        valid: false,
       },
       city: {
         elementType: "input",
@@ -40,6 +54,10 @@ class ContactData extends Component {
           placeholder: "City",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       country: {
         elementType: "input",
@@ -48,6 +66,10 @@ class ContactData extends Component {
           placeholder: "Country",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       email: {
         elementType: "input",
@@ -56,6 +78,10 @@ class ContactData extends Component {
           placeholder: "Your E-mail",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -105,6 +131,24 @@ class ContactData extends Component {
       });
   };
 
+  // Check validation
+  checkValidity(value, rules) {
+    let isvalid = true;
+    // Check that the field is not empty
+    if (rules.required) {
+      isvalid = value.trim() !== "" && isvalid;
+    }
+    // Check min length
+    if (rules.minLength) {
+      isvalid = value.length >= rules.minLength && isvalid;
+    }
+    // Check max length
+    if (rules.maxLength) {
+      isvalid = value.length >= rules.maxLength && isvalid;
+    }
+    return isvalid;
+  }
+
   // Update the input field (onchange method)
   inputChangedHandler = (event, inputIdentifier) => {
     // Get a copy from the state
@@ -117,6 +161,11 @@ class ContactData extends Component {
     };
     // Update the values of the selected input
     updatedFormElement.value = event.target.value;
+    // Check validation (Not empty)
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
     updatedOrderForm[inputIdentifier] = updatedFormElement;
     // Update the state
     this.setState({ orderForm: updatedOrderForm });
