@@ -95,6 +95,23 @@ class ContactData extends Component {
       });
   };
 
+  // Update the input field (onchange method)
+  inputChangedHandler = (event, inputIdentifier) => {
+    // Get a copy from the state
+    const updatedOrderForm = {
+      ...this.state.orderForm,
+    };
+    // Get a copy from element values
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier],
+    };
+    // Update the values of the selected input
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    // Update the state
+    this.setState({ orderForm: updatedOrderForm });
+  };
+
   render() {
     const formElementsArray = [];
     // Make array of the form elements
@@ -113,6 +130,7 @@ class ContactData extends Component {
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
         <Button btnType="Success" clicked={this.orderHandler}>
