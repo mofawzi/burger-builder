@@ -97,6 +97,7 @@ class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" },
           ],
         },
+        validation: {},
         value: "",
         valid: true,
       },
@@ -152,7 +153,7 @@ class ContactData extends Component {
     }
     // Check max length
     if (rules.maxLength) {
-      isvalid = value.length >= rules.maxLength && isvalid;
+      isvalid = value.length <= rules.maxLength && isvalid;
     }
     return isvalid;
   }
