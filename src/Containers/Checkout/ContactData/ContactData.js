@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import Button from "../../../Components/UI/Button/Button";
 import Input from "../../../Components/UI/Input/Input";
 import classes from "./ContactData.css";
@@ -122,7 +124,7 @@ class ContactData extends Component {
 
     // Creating an object to be stored in DB
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       // Submit order (contact) data for the form submission
       orderData: formData,
@@ -231,4 +233,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);

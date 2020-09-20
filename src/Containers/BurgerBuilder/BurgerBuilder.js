@@ -26,6 +26,8 @@ class BurgerBuilder extends Component {
         this.setState({ ingredients: response.data });
       })
       .catch((err) => {
+        console.log("abc");
+
         this.setState({ error: true });
       });
   }
@@ -54,25 +56,7 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    // Deal with routing
-    const queryParams = [];
-    // Push ingredients to the queryParams array (property => value)
-    for (let i in this.state.ingredients) {
-      queryParams.push(
-        encodeURIComponent(i) +
-          "=" +
-          encodeURIComponent(this.state.ingredients[i])
-      );
-    }
-    // Push price to the contact data
-    queryParams.push("price=" + this.state.totalPrice);
-    // Convert the ingredients array to be a query
-    const queryString = queryParams.join("&");
-    // Send selected ingredients in the query
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString,
-    });
+    this.props.history.push("/checkout");
   };
 
   render() {
