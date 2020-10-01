@@ -6,11 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import reducer from "./store/reducers/reducer";
+import burgerBuilderReducer from "./store/reducers/burgerBuilder";
 
 // Create the Store (Global state) for redux
 const store = createStore(
-  reducer,
+  burgerBuilderReducer,
   // Add redux developer tool extention
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
