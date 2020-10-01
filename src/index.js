@@ -9,7 +9,11 @@ import { createStore } from "redux";
 import reducer from "./store/reducer";
 
 // Create the Store (Global state) for redux
-const store = createStore(reducer);
+const store = createStore(
+  reducer,
+  // Add redux developer tool extention
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 // Enable Routing and Redux
 const app = (
