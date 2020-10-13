@@ -28,7 +28,6 @@ export const purchaseInit = () => {
   };
 };
 
-// Async
 export const purchaseBurger = (orderData) => (dispatch) => {
   dispatch(purchaseBurgerStart());
   // Send a post request to save the order in DB
@@ -40,4 +39,43 @@ export const purchaseBurger = (orderData) => (dispatch) => {
     .catch((err) => {
       dispatch(purchaseBurgerFail(err));
     });
+};
+
+export const fetchOrdersSuccess = (orders) => {
+  return {
+    type: actionTypes.FETCH_ORDERS_SUCCESS,
+    orders: orders,
+  };
+};
+
+export const fetchOrdersFail = (error) => {
+  return {
+    type: actionTypes.FETCH_ORDERS_FAIL,
+    error: error,
+  };
+};
+
+export const fetchOrdersStart = () => {
+  return {
+    type: actionTypes.FETCH_ORDERS_START,
+  };
+};
+
+export const fetchOrders = () => (dispatch) => {
+  dispatch(fetchOrdersStart());
+  // Get orders from database
+  axios
+    .get("/orders.json")
+    .then((res) => {
+      const fetchedOrders = [];
+      // set the fetched objects to an array
+      for (let key in res.data) {
+        fetchedOrders.push({
+          ...res.data[key],
+          id: key,
+        });
+      }
+      dispatch(fetchOrdersSuccess(fetchedOrders));
+    })
+    .catch((err) => dispatch(fetchOrdersFail(err)));
 };
