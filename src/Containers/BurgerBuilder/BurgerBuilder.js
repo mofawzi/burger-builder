@@ -19,18 +19,7 @@ class BurgerBuilder extends Component {
   };
 
   // Get ingredients from backend (Database)
-  componentDidMount() {
-    axios
-      .get("https://my-burger-0128.firebaseio.com/ingredients.json")
-      .then((response) => {
-        this.setState({ ingredients: response.data });
-      })
-      .catch((err) => {
-        console.log("abc");
-
-        this.setState({ error: true });
-      });
-  }
+  componentDidMount() {}
 
   // Purchasable if sum of ingredients > 0
   updatePurchaseState(ingredients) {
@@ -80,7 +69,7 @@ class BurgerBuilder extends Component {
       <Spinner />
     );
 
-    // Show Spinner while the burger ingredients is being fetched from db yet
+    // Show Spinner while the burger ingredients is being fetched from db
     if (this.props.ings) {
       burger = (
         <Aux>
@@ -104,11 +93,6 @@ class BurgerBuilder extends Component {
         />
       );
     }
-
-    // Showing Spinner if loading
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
     return (
       <Aux>
         <Modal
@@ -128,6 +112,7 @@ const mapStateToProps = (state) => {
   return {
     ings: state.ingredients,
     price: state.totalPrice,
+    error: state.error,
   };
 };
 
@@ -137,6 +122,7 @@ const mapDispachToProps = (dispatch) => {
       dispatch(burgerBuilderActios.addIngredient(ingName)),
     onIngredientRemoved: (ingName) =>
       dispatch(burgerBuilderActios.removeIngredient(ingName)),
+    onInitIngredients: dispatch,
   };
 };
 
