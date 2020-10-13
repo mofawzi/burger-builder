@@ -18,8 +18,10 @@ class BurgerBuilder extends Component {
     error: false,
   };
 
-  // Get ingredients from backend (Database)
-  componentDidMount() {}
+  componentDidMount() {
+    // Get ingredients from backend (Database)
+    this.props.onInitIngredients();
+  }
 
   // Purchasable if sum of ingredients > 0
   updatePurchaseState(ingredients) {
@@ -63,7 +65,7 @@ class BurgerBuilder extends Component {
     let orderSummary = null;
 
     // Show error if ingredients can't be fetched from db
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <h1>Ingredients can't be loaded!</h1>
     ) : (
       <Spinner />
@@ -122,7 +124,7 @@ const mapDispachToProps = (dispatch) => {
       dispatch(burgerBuilderActios.addIngredient(ingName)),
     onIngredientRemoved: (ingName) =>
       dispatch(burgerBuilderActios.removeIngredient(ingName)),
-    onInitIngredients: dispatch,
+    onInitIngredients: () => dispatch(burgerBuilderActios.initIngredients()),
   };
 };
 
