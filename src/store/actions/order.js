@@ -17,7 +17,7 @@ export const purchaseBurgerFail = (error) => {
 };
 
 // Async
-export const purchaceBurgerStart = (orderData) => (dispatch) => {
+export const purchaseBurgerStart = (orderData) => (dispatch) => {
   // Send a post request to save the order in DB
   axios
     .post("/orders.json", orderData)

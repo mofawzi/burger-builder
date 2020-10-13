@@ -6,10 +6,12 @@ import Input from "../../../Components/UI/Input/Input";
 import classes from "./ContactData.css";
 import Spinner from "../../../Components/UI/Spinner/Spinner";
 import axios from "../../../axios-orders";
+import withErrorrHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import * as actions from "../../../store/actions/index";
 
 class ContactData extends Component {
   state = {
-    // Make dynamic form
+    // Make a dynamic form
     orderForm: {
       name: {
         elementType: "input",
@@ -112,8 +114,6 @@ class ContactData extends Component {
     // To stop re-rendring
     event.preventDefault();
     // Deal with firebase
-    // Update Loading screen ' Spinner '
-    this.setState({ loading: true });
     // Extract form data from the state
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
@@ -129,17 +129,8 @@ class ContactData extends Component {
       // Submit order (contact) data for the form submission
       orderData: formData,
     };
-
-    // Send a post request to save the order in DB
-    axios
-      .post("/orders.json", order)
-      .then((response) => {
-        this.setState({ loading: false });
-        this.props.history.push("/");
-      })
-      .catch((err) => {
-        this.setState({ loading: false });
-      });
+    // Dispatch the order
+    this.props.onOrderBurger(order);
   };
 
   // Check validation
@@ -240,4 +231,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onOrderBurger: (orderData) =>
+      dispatch(actions.purchaseBurgerStart(orderData)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorrHandler(ContactData, axios));
