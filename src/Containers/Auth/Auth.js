@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import classes from "./Auth.css";
 import Input from "../../Components/UI/Input/Input";
 import Button from "../../Components/UI/Button/Button";
 
@@ -60,7 +61,7 @@ class Auth extends Component {
       />
     ));
     return (
-      <div>
+      <div className={classes.Auth}>
         <form>
           {form}
           <Button btnType="Success">SUBMIT</Button>
