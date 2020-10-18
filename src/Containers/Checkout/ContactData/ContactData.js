@@ -89,6 +89,7 @@ class ContactData extends Component {
         value: "",
         validation: {
           required: true,
+          isEmail: true,
         },
         valid: false,
         touched: false,
@@ -134,20 +135,33 @@ class ContactData extends Component {
 
   // Check validation
   checkValidity(value, rules) {
-    let isvalid = true;
+    let isValid = true;
+    if (!rules) {
+      return true;
+    }
     // Check that the field is not empty
     if (rules.required) {
-      isvalid = value.trim() !== "" && isvalid;
+      isValid = value.trim() !== "" && isValid;
     }
     // Check min length
     if (rules.minLength) {
-      isvalid = value.length >= rules.minLength && isvalid;
+      isValid = value.length >= rules.minLength && isValid;
     }
     // Check max length
     if (rules.maxLength) {
-      isvalid = value.length <= rules.maxLength && isvalid;
+      isValid = value.length <= rules.maxLength && isValid;
     }
-    return isvalid;
+    // Check email
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+    // Check numeric
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+    return isValid;
   }
 
   // Update the input field (onchange method)
