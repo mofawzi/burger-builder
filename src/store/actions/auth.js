@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as actionTypes from "./actionTypes";
 
 export const authStart = () => {
@@ -21,5 +22,25 @@ export const authFail = (err) => {
 };
 
 export const auth = (email, password) => (dispatch) => {
-  dispatch(authStart);
+  dispatch(authStart());
+  // Data obeject to sign up
+  const authData = {
+    email: email,
+    password: password,
+    returnSecureToken: true,
+  };
+  // Send Sign up request to firebase
+  axios
+    .post(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCsa_GDixxAVuafp4XRE2074QjqxPiDLUk",
+      authData
+    )
+    .then((res) => {
+      console.log(res);
+      dispatch(authSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(authFail(err));
+    });
 };
