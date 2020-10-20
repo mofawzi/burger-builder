@@ -28,11 +28,11 @@ export const purchaseInit = () => {
   };
 };
 
-export const purchaseBurger = (orderData) => (dispatch) => {
+export const purchaseBurger = (orderData, token) => (dispatch) => {
   dispatch(purchaseBurgerStart());
   // Send a post request to save the order in DB
   axios
-    .post("/orders.json", orderData)
+    .post("/orders.json?auth=" + token, orderData)
     .then((response) => {
       dispatch(purchaseBurgerSuccess(response.data.name, orderData));
     })
@@ -61,11 +61,11 @@ export const fetchOrdersStart = () => {
   };
 };
 
-export const fetchOrders = () => (dispatch) => {
+export const fetchOrders = (token) => (dispatch) => {
   dispatch(fetchOrdersStart());
   // Get orders from database
   axios
-    .get("/orders.json")
+    .get("/orders.json?auth=" + token)
     .then((res) => {
       const fetchedOrders = [];
       // set the fetched objects to an array
@@ -77,5 +77,5 @@ export const fetchOrders = () => (dispatch) => {
       }
       dispatch(fetchOrdersSuccess(fetchedOrders));
     })
-    .catch((err) => dispatch(fetchOrdersFail(err)));
+    .catch((error) => dispatch(fetchOrdersFail(error)));
 };
