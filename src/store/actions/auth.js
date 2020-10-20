@@ -22,6 +22,21 @@ export const authFail = (error) => {
   };
 };
 
+// Logout Handler
+export const logout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  };
+};
+
+// Check the token expiration
+// Logging out the user after 1h
+export const checkAuthTimeout = (expirationTime) => (dispatch) => {
+  setTimeout(() => {
+    dispatch(logout());
+  }, expirationTime * 1000);
+};
+
 export const auth = (email, password, isSignup) => (dispatch) => {
   dispatch(authStart());
   // Data obeject to sign up
@@ -46,6 +61,7 @@ export const auth = (email, password, isSignup) => (dispatch) => {
     .then((res) => {
       console.log(res);
       dispatch(authSuccess(res.data.idToken, res.data.localId));
+      dispatch(checkAuthTimeout(res.data.expiresIn));
     })
     .catch((error) => {
       dispatch(authFail(error.response.data.error));
