@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classes from "./App.css";
 import { Route, Switch } from "react-router-dom";
 
-import Layout from "./Components/Layout/Layout";
+import Layout from "./Containers/Layout/Layout";
 import BurgerBuilder from "./Containers/BurgerBuilder/BurgerBuilder";
 import Checkout from "./Containers/Checkout/Checkout";
 import Orders from "./Containers/Orders/Orders";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "../../Components/UI/Modal/Modal";
-import Aux from "../Aux";
+import Aux from "../Aux/Aux";
 
 // A higher order component to handle errors globally (Wrapper component)
 const withErrorHandler = (WrappedComponent, axios) => {
