@@ -7,10 +7,11 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (token, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    authData: authData,
+    idToken: token,
+    userId: userId,
   };
 };
 
@@ -30,10 +31,12 @@ export const auth = (email, password, isSignup) => (dispatch) => {
     returnSecureToken: true,
   };
   // URL to firebase API
+  // Sign up URL
   let url =
     "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCsa_GDixxAVuafp4XRE2074QjqxPiDLUk";
 
   if (!isSignup) {
+    // Sign in URL
     url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCsa_GDixxAVuafp4XRE2074QjqxPiDLUk";
   }
@@ -42,7 +45,7 @@ export const auth = (email, password, isSignup) => (dispatch) => {
     .post(url, authData)
     .then((res) => {
       console.log(res);
-      dispatch(authSuccess(res.data));
+      dispatch(authSuccess(res.data.idToken, res.data.localId));
     })
     .catch((error) => {
       console.log(error);
