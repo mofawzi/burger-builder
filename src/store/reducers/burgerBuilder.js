@@ -5,6 +5,7 @@ const initialState = {
   ingredients: null,
   totalPrice: 4,
   error: false,
+  building: false,
 };
 
 // Initial Price Set
@@ -31,6 +32,7 @@ const addIngredient = (state, action) => {
     ingredients: updatedIngs,
     // Update Price
     totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+    building: true,
   };
   return updateObject(state, updatedState);
 };
@@ -46,6 +48,7 @@ const removeIngredient = (state, action) => {
     ingredients: updatedIngs,
     // Update Price
     totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+    building: true,
   };
   return updateObject(state, updatedState);
 };
@@ -63,6 +66,8 @@ const setIngredients = (state, action) => {
     // Reset the price after a successful order is done
     totalPrice: 4,
     error: false,
+    // Set building to false => Reloading the page or resetting
+    building: false,
   });
 };
 
