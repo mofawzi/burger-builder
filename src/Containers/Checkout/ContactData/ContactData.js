@@ -128,6 +128,8 @@ class ContactData extends Component {
       price: this.props.price,
       // Submit order (contact) data for the form submission
       orderData: formData,
+      // Add user ID to specify his orders
+      userId: this.props.userId,
     };
     // Pass token to be able to make an order
     const token = this.props.token;
@@ -245,6 +247,7 @@ const mapStateToProps = (state) => {
     price: state.burgerBuilder.totalPrice,
     token: state.auth.token,
     loading: state.order.loading,
+    userId: state.auth.userId,
   };
 };
 
