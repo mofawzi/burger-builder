@@ -71,7 +71,7 @@ export const auth = (email, password, isSignup) => (dispatch) => {
 // Set the redirect path for authentication
 export const setAuthRedirectPath = (path) => {
   return {
-    typ: actionTypes.SET_AUTH_REDIRECT_PATH,
+    type: actionTypes.SET_AUTH_REDIRECT_PATH,
     path: path,
   };
 };
