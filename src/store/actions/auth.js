@@ -24,6 +24,10 @@ export const authFail = (error) => {
 
 // Logout Handler
 export const logout = () => {
+  // Clear the local storage
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("expirationDate");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -60,6 +64,15 @@ export const auth = (email, password, isSignup) => (dispatch) => {
     .post(url, authData)
     .then((res) => {
       console.log(res);
+      // Calculate the expiration date of the token in seconds
+      const expirationDate = new Date(
+        new Date().getTime() + res.data.expiresIn * 1000
+      );
+      // Store the token, userId and the expiration date to the local storage of the browser
+      localStorage.setItem("token", res.data.idToken);
+      localStorage.setItem("expirationDate", expirationDate);
+      localStorage.setItem("userId", res.data.localId);
+
       dispatch(authSuccess(res.data.idToken, res.data.localId));
       dispatch(checkAuthTimeout(res.data.expiresIn));
     })
@@ -73,5 +86,27 @@ export const setAuthRedirectPath = (path) => {
   return {
     type: actionTypes.SET_AUTH_REDIRECT_PATH,
     path: path,
+  };
+};
+
+export const authCheckState = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      dispatch(logout());
+    } else {
+      // Need to Login
+      const expirationDate = new Date(localStorage.getItem("expirationDate"));
+      if (expirationDate > new Date()) {
+      } else {
+        // Automatically login the user if the token is still valid
+        const userId = localStorage.getItem("userId");
+        dispatch(authSuccess(token, userId));
+        // expiring date = the difference of Future date in seconds, the current date in seconds
+        dispatch(
+          checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds)
+        );
+      }
+    }
   };
 };
