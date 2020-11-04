@@ -77,7 +77,7 @@ export const auth = (email, password, isSignup) => (dispatch) => {
       dispatch(checkAuthTimeout(res.data.expiresIn));
     })
     .catch((error) => {
-      dispatch(authFail(error.response.data.error));
+      dispatch(authFail(error.res.data.error));
     });
 };
 
@@ -97,14 +97,16 @@ export const authCheckState = () => {
     } else {
       // Need to Login
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
-      if (expirationDate > new Date()) {
+      if (expirationDate <= new Date()) {
       } else {
         // Automatically login the user if the token is still valid
         const userId = localStorage.getItem("userId");
         dispatch(authSuccess(token, userId));
-        // expiring date = the difference of Future date in seconds, the current date in seconds
+        // expiring date = the difference of Future date and the current date
         dispatch(
-          checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds)
+          checkAuthTimeout(
+            (expirationDate.getTime() - new Date().getTime()) / 1000
+          )
         );
       }
     }
