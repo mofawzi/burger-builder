@@ -9,6 +9,7 @@ import axios from "../../../axios-orders";
 import withErrorrHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../../store/actions/index";
 import { updateObject } from "../../../shared/utility";
+import { checkValidity } from "../../../shared/validation";
 
 class ContactData extends Component {
   state = {
@@ -138,37 +139,6 @@ class ContactData extends Component {
     this.props.onOrderBurger(order, token);
   };
 
-  // Check validation
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (!rules) {
-      return true;
-    }
-    // Check that the field is not empty
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    // Check min length
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-    // Check max length
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-    // Check email
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-    // Check numeric
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-    return isValid;
-  }
-
   // Update the input field (onchange method)
   inputChangedHandler = (event, inputIdentifier) => {
     // Get a copy from element values
@@ -178,7 +148,7 @@ class ContactData extends Component {
         // Update the values of the selected input
         value: event.target.value,
         // Check validation (Not empty)
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.orderForm[inputIdentifier].validation
         ),
