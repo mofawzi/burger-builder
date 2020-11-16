@@ -8,6 +8,7 @@ import Spinner from "../../../Components/UI/Spinner/Spinner";
 import axios from "../../../axios-orders";
 import withErrorrHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../../store/actions/index";
+import { updateObject } from "../../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -170,24 +171,25 @@ class ContactData extends Component {
 
   // Update the input field (onchange method)
   inputChangedHandler = (event, inputIdentifier) => {
-    // Get a copy from the state
-    const updatedOrderForm = {
-      ...this.state.orderForm,
-    };
     // Get a copy from element values
-    const updatedFormElement = {
-      ...updatedOrderForm[inputIdentifier],
-    };
-    // Update the values of the selected input
-    updatedFormElement.value = event.target.value;
-    // Check validation (Not empty)
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
+    const updatedFormElement = updateObject(
+      this.state.orderForm[inputIdentifier],
+      {
+        // Update the values of the selected input
+        value: event.target.value,
+        // Check validation (Not empty)
+        valid: this.checkValidity(
+          event.target.value,
+          this.state.orderForm[inputIdentifier].validation
+        ),
+        // update if the element is touched by the user
+        touched: true,
+      }
     );
-    // update if the element is touched by the user
-    updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    // Get a copy from the state
+    const updatedOrderForm = updateObject(this.state.orderForm, {
+      [inputIdentifier]: updatedFormElement,
+    });
 
     // Check if the form is valid to be submitted
     let formIsValid = true;
