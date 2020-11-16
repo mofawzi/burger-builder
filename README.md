@@ -1,3 +1,29 @@
+# Burger Builder
+
+> By: Mohamed Fawzy
+
+## About
+
+A burger ordering website, built with React.
+
+User has the ability to signup, signin, design, edit and place an order to his created burger.
+
+### Application link:
+
+- [Burger Builder](https://my-burger-0128.web.app)
+
+### Skills used for this project
+
+- ReactJS
+- Redux
+- Firebase
+- Bootstrap
+- HTML
+- CSS
+- Javasript
+
+- All rights reserved for [Maximilian Schwarzmüller](https://github.com/maxschwarzmueller)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
