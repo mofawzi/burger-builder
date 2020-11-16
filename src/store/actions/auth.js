@@ -63,7 +63,6 @@ export const auth = (email, password, isSignup) => (dispatch) => {
   axios
     .post(url, authData)
     .then((res) => {
-      console.log(res);
       // Calculate the expiration date of the token in seconds
       const expirationDate = new Date(
         new Date().getTime() + res.data.expiresIn * 1000
