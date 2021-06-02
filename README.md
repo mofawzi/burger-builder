@@ -22,8 +22,6 @@ User has the ability to signup, signin, design, edit and place an order to his c
 - CSS
 - Javasript
 
-- All rights reserved for [Maximilian Schwarzmüller](https://github.com/maxschwarzmueller)
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
